@@ -136,17 +136,7 @@ const CitesTable = () => {
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
                   >
                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                      <a
-                        href={`/weather/${item.ascii_name}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onContextMenu={(e) => {
-                          e.preventDefault(); // Prevent default right-click behavior
-                          window.open(`/weather/${item.ascii_name}`, "_blank");
-                        }}
-                      >
-                        {item.ascii_name}
-                      </a>
+                      
                       <Link to={`/weather/${item.ascii_name}`}>
                         {item.ascii_name}
                       </Link>
