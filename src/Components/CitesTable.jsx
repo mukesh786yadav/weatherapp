@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const CitesTable = () => {
-  
   const api_url = import.meta.env.VITE_CITY_API_URL;
-    
 
   const [data, setData] = useState([]);
   const [searchCityName, setSearchCityName] = useState("");
@@ -17,7 +15,9 @@ const CitesTable = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${api_url}?limit=100&offset=${(page - 1) * 100}` );
+      const response = await axios.get(
+        `${api_url}?limit=100&offset=${(page - 1) * 100}`
+      );
       setData([...data, ...response.data.results]);
       setPage(page + 1);
       setHasMore(response.data.results.length > 0);
@@ -53,7 +53,7 @@ const CitesTable = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   //console.log(data);
 
   return (
@@ -106,53 +106,58 @@ const CitesTable = () => {
           loader={<h4>Loading...</h4>}
           endMessage={<p>No more cities to show</p>}
         >
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                City Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Country
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Timezone
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Country Code
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            {data
-              .filter((item) => {
-                return searchCityName.toLowerCase() === ""
-                  ? item
-                  : item.ascii_name.toLowerCase().includes(searchCityName);
-              })
-              .map((item) => (
-                <tr
-                  key={item.recordid}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-                >
-                  <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                    <a
-                      href={`/weather/${item.ascii_name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.ascii_name }
-                    </a>
-                    <Link to={`/weather/${item.ascii_name}`}>{item.ascii_name}</Link>
-                  </td>
-                  <td className="px-6 py-4">{item.cou_name_en}</td>
-                  <td className="px-6 py-4">{item.timezone}</td>
-                  <td className="px-6 py-4">{item.country_code}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  City Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Country
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Timezone
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Country Code
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data
+                .filter((item) => {
+                  return searchCityName.toLowerCase() === ""
+                    ? item
+                    : item.ascii_name.toLowerCase().includes(searchCityName);
+                })
+                .map((item) => (
+                  <tr
+                    key={item.recordid}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+                  >
+                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                      <a
+                        href={`/weather/${item.ascii_name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onContextMenu={(e) => {
+                          e.preventDefault(); // Prevent default right-click behavior
+                          window.open(`/weather/${item.ascii_name}`, "_blank");
+                        }}
+                      >
+                        {item.ascii_name}
+                      </a>
+                      <Link to={`/weather/${item.ascii_name}`}>
+                        {item.ascii_name}
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4">{item.cou_name_en}</td>
+                    <td className="px-6 py-4">{item.timezone}</td>
+                    <td className="px-6 py-4">{item.country_code}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </InfiniteScroll>
       </div>
     </div>
