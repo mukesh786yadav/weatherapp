@@ -57,7 +57,7 @@ const CitesTable = () => {
   //console.log(data);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10  bg-gray-100">
+    <div className="max-w-4xl mx-auto mt-10  bg-gray-100 rounded-md">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="mx-auto my-auto  mt-5 ">
           <h1 className="font-semibold text-center text-2xl md:text-2xl">
@@ -106,7 +106,7 @@ const CitesTable = () => {
           loader={<h4>Loading...</h4>}
           endMessage={<p>No more cities to show</p>}
         >
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-md">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
