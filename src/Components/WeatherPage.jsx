@@ -19,8 +19,15 @@ const WeatherPage = () => {
         const locationResponse = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`
         );
-        //console.log("Location response:", locationResponse); // Log the entire response object
-        setWeatherData(locationResponse.data);
+        
+        if (locationResponse.data.cod !== 200) {
+          setError(new Error(`API error: ${locationResponse.data.message}`));
+        } else {
+          console.log("Location response:", locationResponse.data);
+          setWeatherData(locationResponse.data);
+        }
+        //console.log("Location response:", locationResponse.data); // Log the entire response object
+        //setWeatherData(locationResponse.data);
         //const { lon, lat } = locationResponse.data.coord;
         //console.log(lon);
         //console.log(lat);
