@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const CitesTable = () => {
+  
   const api_url = import.meta.env.VITE_CITY_API_URL;
 
   const [data, setData] = useState([]);
